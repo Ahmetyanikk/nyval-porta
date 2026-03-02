@@ -1,0 +1,156 @@
+:root{
+  --bg0:#040d14;
+  --bg1:#061a24;
+  --panel: rgba(255,255,255,0.045);
+  --panel2: rgba(255,255,255,0.075);
+  --text: rgba(255,255,255,0.92);
+  --muted: rgba(255,255,255,0.72);
+
+  --neon:#46f0ff;
+  --neon2:#2dd6ff;
+  --white:#ffffff;
+  --line: rgba(70,240,255,0.20);
+  --line2: rgba(255,255,255,0.10);
+
+  --shadow: 0 18px 55px rgba(0,0,0,0.45);
+  --glow: 0 0 0 1px rgba(70,240,255,0.22), 0 0 35px rgba(70,240,255,0.10);
+}
+
+/* Full background with neon glow depth */
+html, body, [data-testid="stAppViewContainer"]{
+  background:
+    radial-gradient(900px 500px at 15% 10%, rgba(70,240,255,0.18), transparent 60%),
+    radial-gradient(700px 420px at 85% 15%, rgba(45,214,255,0.12), transparent 58%),
+    radial-gradient(900px 700px at 50% 110%, rgba(80,110,255,0.10), transparent 55%),
+    linear-gradient(180deg, var(--bg1) 0%, var(--bg0) 65%, #02080d 100%) !important;
+  color: var(--text) !important;
+}
+
+/* Optional subtle noise layer for premium feel */
+[data-testid="stAppViewContainer"]::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events:none;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.14'/%3E%3C/svg%3E");
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+}
+
+[data-testid="stHeader"]{ background: transparent !important; }
+
+/* Typography */
+h1{
+  font-size: 44px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.4px;
+  color: var(--white) !important;
+}
+h2, h3{
+  color: var(--white) !important;
+  letter-spacing: 0.3px;
+}
+p, li, label, .stMarkdown{ color: var(--muted) !important; }
+
+/* Layout */
+.block-container{
+  padding-top: 26px !important;
+  padding-bottom: 46px !important;
+  max-width: 860px !important;
+}
+
+/* Premium glass card */
+.ny-card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 1px solid var(--line2);
+  border-radius: 18px;
+  padding: 18px 18px 14px 18px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+.ny-card::after{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius: 18px;
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, rgba(70,240,255,0.35), rgba(255,255,255,0.06), rgba(45,214,255,0.18)) border-box;
+  -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events:none;
+  opacity: 0.55;
+}
+
+.ny-card-title{
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--white);
+  margin: 0 0 10px 0;
+}
+
+.ny-help{
+  font-style: italic;
+  color: rgba(255,255,255,0.70);
+  margin-top: 8px;
+}
+
+/* Upload vault module */
+.ny-vault{
+  border-radius: 16px;
+  padding: 14px 14px 10px 14px;
+  border: 1px solid rgba(70,240,255,0.18);
+  background: rgba(0,0,0,0.16);
+  box-shadow: var(--glow);
+}
+.ny-vault-title{
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+/* File uploader dropzone */
+[data-testid="stFileUploaderDropzone"]{
+  background: rgba(255,255,255,0.03) !important;
+  border: 1px dashed rgba(70,240,255,0.35) !important;
+  border-radius: 14px !important;
+}
+[data-testid="stFileUploaderDropzone"] *{
+  color: rgba(255,255,255,0.72) !important;
+}
+
+/* Inputs */
+input, textarea{
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(70,240,255,0.16) !important;
+  color: var(--white) !important;
+  border-radius: 12px !important;
+}
+input:focus, textarea:focus{
+  border: 1px solid rgba(70,240,255,0.45) !important;
+  box-shadow: 0 0 0 3px rgba(70,240,255,0.12) !important;
+}
+
+/* Buttons */
+.stButton > button, .stDownloadButton > button{
+  background: linear-gradient(90deg, var(--neon2), var(--neon)) !important;
+  color: #031018 !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+  padding: 10px 18px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 10px 30px rgba(70,240,255,0.22);
+}
+.stButton > button:hover, .stDownloadButton > button:hover{
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+/* Checkbox */
+[data-testid="stCheckbox"] label{
+  color: rgba(255,255,255,0.82) !important;
+}
