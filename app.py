@@ -14,7 +14,9 @@ if css_path.exists():
 
 # Header
 st.title("NYVAL - Dépôt de Données Sécurisé")
-st.image("assets/logo.png", width=260)
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    st.image("assets/logonyval.png", width=450)
 st.markdown(
     "Ce portail est destiné à la transmission des données de consommation pour la réalisation de votre Audit Flash. "
     "Les données sont cryptées et traitées sous 48h par notre moteur d’intelligence énergétique."
@@ -23,7 +25,7 @@ st.markdown(
 st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
 
 # NDA inputs (5 fields)
-st.markdown("<div class='ny-card'>", unsafe_allow_html=True)
+
 st.markdown("<div class='ny-card-title'>Informations NDA</div>", unsafe_allow_html=True)
 
 company_name = st.text_input("Company Name *", placeholder="Ex: STEF")
@@ -64,13 +66,13 @@ st.markdown("</div>", unsafe_allow_html=True)
 st.markdown("<div style='height:16px'></div>", unsafe_allow_html=True)
 
 # Upload vault sections
-st.markdown("<div class='ny-card'>", unsafe_allow_html=True)
+
 st.markdown("<div class='ny-card-title'>Dépôt de Données</div>", unsafe_allow_html=True)
 
 
 
 # ENEDIS (Vault)
-st.markdown("<div class='ny-vault'>", unsafe_allow_html=True)
+#st.markdown("<div class='ny-vault'>", unsafe_allow_html=True)
 st.markdown("<div class='ny-vault-title'>Export ENEDIS (Point 10 minutes - 12 mois) *</div>", unsafe_allow_html=True)
 
 enedis_file = st.file_uploader(" ", type=["csv", "xlsx"], key="enedis")
@@ -85,7 +87,7 @@ st.markdown("</div>", unsafe_allow_html=True)
 st.markdown("<div style='height:14px'></div>", unsafe_allow_html=True)
 
 # Invoices (Vault)
-st.markdown("<div class='ny-vault'>", unsafe_allow_html=True)
+#st.markdown("<div class='ny-vault'>", unsafe_allow_html=True)
 st.markdown("<div class='ny-vault-title'>Justificatifs de Facturation (Dernier trimestre complet) *</div>", unsafe_allow_html=True)
 
 invoice_files = st.file_uploader(" ", type=["pdf"], accept_multiple_files=True, key="invoices")
@@ -100,7 +102,7 @@ st.markdown("</div>", unsafe_allow_html=True)
 st.markdown("<div style='height:14px'></div>", unsafe_allow_html=True)
 
 # WMS (Vault)
-st.markdown("<div class='ny-vault'>", unsafe_allow_html=True)
+#st.markdown("<div class='ny-vault'>", unsafe_allow_html=True)
 st.markdown("<div class='ny-vault-title'>Cartographie des Flux Logistiques (Entrées / Sorties Quai) *</div>", unsafe_allow_html=True)
 
 wms_file = st.file_uploader(" ", type=["csv", "xlsx"], key="wms")
@@ -170,7 +172,7 @@ if submit:
         st.success("Merci. Vos données ont été déposées avec succès.")
 
         # Confirmation summary
-        st.markdown("<div class='ny-card'>", unsafe_allow_html=True)
+        
         st.markdown("<div class='ny-card-title'>Résumé du dépôt</div>", unsafe_allow_html=True)
 
         st.write(f"Company: {company_name}")
