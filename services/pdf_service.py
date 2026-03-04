@@ -4,7 +4,7 @@ from fpdf import FPDF
 from pypdf import PdfReader, PdfWriter
 from utils.dates import today_str_fr
 
-TEMPLATE_PATH = Path("assets/NDA NYVALmodèle type.pdf")
+TEMPLATE_PATH = Path("assets/nda_template_clean..pdf")
 
 DEBUG_BOXES = False
 OPEN_SANS_REGULAR = "assets/fonts/OpenSans-Regular.ttf"
@@ -17,23 +17,23 @@ def init_font(pdf: FPDF, size: float):
 
 FIELD_CONFIG = {
     "company_name": {
-        "box": (30, 153, 143, 12),     # x, y, w, h (top-left box)
-        "text": (50, 160),             # x, baseline y
+        "box": (30, 153, 0, 0),     # x, y, w, h (top-left box)
+        "text": (50, 170),             # x, baseline y
         "max_width": 145,
         "font_size": 10,
         "wrap": False,
     },
     "legal_form": {
-        "box": (175, 153, 85, 12),
-        "text": (200, 160),
+        "box": (175, 153, 0, 0),
+        "text": (200, 170),
         "max_width": 85,
         "font_size": 10,
         "wrap": False,
     },
     "hq_address": {
         # taller box so it can wrap to 2 lines
-        "box": (290, 150, 47, 20),
-        "text": (300, 150),            # y here acts like top for wrapped text
+        "box": (290, 150, 0, 0),
+        "text": (300, 160),            # y here acts like top for wrapped text
         "max_width": 85,
         "font_size":10,
         "wrap": True,
@@ -41,48 +41,48 @@ FIELD_CONFIG = {
         "max_lines": 6,
     },
     "rep_name": {
-        "box": (400, 150, 127, 16),
-        "text": (450, 160),
+        "box": (400, 150, 0, 0),
+        "text": (450, 170),
         "max_width": 195,
         "font_size": 10,
         "wrap": False,
     },
     "job_title": {
-        "box": (80, 168, 50, 10),
-        "text": (80, 175),
+        "box": (80, 168, 0, 0),
+        "text": (80, 185),
         "max_width": 205,
         "font_size": 10,
         "wrap": False,
     },
     "date": {
-        "box": (40, 740, 100, 16),
-        "text": (50, 740),
+        "box": (40, 740, 0, 0),
+        "text": (50, 750),
         "max_width": 105,
         "font_size": 10,
         "wrap": False,
     },
     "nyval_phrase": {
-        "box": (25, 80, 180, 14),   # area to clear above signature
-        "text": (25, 90),           # baseline y
+        "box": (25, 80, 0, 0),   # area to clear above signature
+        "text": (25, 100),           # baseline y
         "max_width": 175,
         "font_size": 10,
         "wrap": False,
     },
     "nyval_signature": {
         # box used to clear any placeholder area behind signature if needed
-        "box": (100, 105, 180, 60),   # signature area
+        "box": (100, 105, 0, 0),   # signature area
         "img": (100, 105, 160, 50),   # x, y, width, height for image
     },
     "rep_name_2": {
-        "box": (13, 170, 93, 16),
-        "text": (25, 180),
+        "box": (13, 170, 0, 0),
+        "text": (25, 190),
         "max_width": 195,
         "font_size": 10,
         "wrap": False,
     },
     "job_title_2": {
-        "box": (110, 170, 93, 16),
-        "text": (120, 180),
+        "box": (110, 170, 0, 0),
+        "text": (120, 190),
         "max_width": 205,
         "font_size": 10,
         "wrap": False,
