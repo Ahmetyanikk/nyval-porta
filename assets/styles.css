@@ -213,3 +213,46 @@ div[data-baseweb="textarea"] > div:focus-within {
   border: 1px solid rgba(70,240,255,0.45) !important;
   box-shadow: 0 0 0 3px rgba(70,240,255,0.12) !important;
 }
+label, .stTextInput label, .stTextArea label {
+  color: rgba(255,255,255,0.85) !important;
+}
+
+/* Force Streamlit text inputs to be dark with white text (high specificity) */
+[data-testid="stTextInput"] div[data-baseweb="input"] > div,
+[data-testid="stNumberInput"] div[data-baseweb="input"] > div,
+[data-testid="stTextArea"] div[data-baseweb="textarea"] > div {
+  background-color: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(70,240,255,0.18) !important;
+  border-radius: 12px !important;
+}
+
+/* The actual input text */
+[data-testid="stTextInput"] input,
+[data-testid="stNumberInput"] input,
+[data-testid="stTextArea"] textarea {
+  color: rgba(255,255,255,0.92) !important;
+  -webkit-text-fill-color: rgba(255,255,255,0.92) !important; /* fixes Chrome/Safari */
+  background: transparent !important;
+}
+
+/* Placeholder */
+[data-testid="stTextInput"] input::placeholder,
+[data-testid="stTextArea"] textarea::placeholder {
+  color: rgba(255,255,255,0.55) !important;
+  -webkit-text-fill-color: rgba(255,255,255,0.55) !important;
+}
+
+/* Focus state */
+[data-testid="stTextInput"] div[data-baseweb="input"] > div:focus-within,
+[data-testid="stTextArea"] div[data-baseweb="textarea"] > div:focus-within {
+  border: 1px solid rgba(70,240,255,0.45) !important;
+  box-shadow: 0 0 0 3px rgba(70,240,255,0.12) !important;
+}
+/* Force Streamlit text inputs to be dark with white text (high specificity) */
+[data-testid="stTextInput"] div[data-baseweb="input"] > div,
+[data-testid="stNumberInput"] div[data-baseweb="input"] > div,
+[data-testid="stTextArea"] div[data-baseweb="textarea"] > div {
+  background-color: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(70,240,255,0.18) !important;
+  border-radius: 12px !important;
+}

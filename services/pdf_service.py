@@ -18,14 +18,14 @@ def init_font(pdf: FPDF, size: float):
 FIELD_CONFIG = {
     "company_name": {
         "box": (30, 153, 0, 0),     # x, y, w, h (top-left box)
-        "text": (50, 170),             # x, baseline y
+        "text": (50, 172),             # x, baseline y
         "max_width": 145,
         "font_size": 10,
         "wrap": False,
     },
     "legal_form": {
         "box": (175, 153, 0, 0),
-        "text": (200, 170),
+        "text": (200, 172),
         "max_width": 85,
         "font_size": 10,
         "wrap": False,
@@ -33,7 +33,7 @@ FIELD_CONFIG = {
     "hq_address": {
         # taller box so it can wrap to 2 lines
         "box": (290, 150, 0, 0),
-        "text": (300, 160),            # y here acts like top for wrapped text
+        "text": (300, 161),            # y here acts like top for wrapped text
         "max_width": 85,
         "font_size":10,
         "wrap": True,
@@ -42,21 +42,21 @@ FIELD_CONFIG = {
     },
     "rep_name": {
         "box": (400, 150, 0, 0),
-        "text": (450, 170),
+        "text": (450, 172),
         "max_width": 195,
         "font_size": 10,
         "wrap": False,
     },
     "job_title": {
         "box": (80, 168, 0, 0),
-        "text": (80, 185),
+        "text": (80, 186),
         "max_width": 205,
         "font_size": 10,
         "wrap": False,
     },
     "date": {
         "box": (40, 740, 0, 0),
-        "text": (50, 750),
+        "text": (50, 754),
         "max_width": 105,
         "font_size": 10,
         "wrap": False,
