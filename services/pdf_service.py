@@ -17,14 +17,14 @@ def init_font(pdf: FPDF, size: float):
 
 FIELD_CONFIG = {
     "company_name": {
-        "box": (70, 156, 50, 10),     # x, y, w, h (top-left box)
+        "box": (30, 153, 143, 12),     # x, y, w, h (top-left box)
         "text": (50, 160),             # x, baseline y
         "max_width": 145,
         "font_size": 10,
         "wrap": False,
     },
     "legal_form": {
-        "box": (120, 156, 50, 10),
+        "box": (175, 153, 85, 12),
         "text": (200, 160),
         "max_width": 85,
         "font_size": 10,
@@ -32,8 +32,8 @@ FIELD_CONFIG = {
     },
     "hq_address": {
         # taller box so it can wrap to 2 lines
-        "box": (300, 156, 40, 20),
-        "text": (300, 145),            # y here acts like top for wrapped text
+        "box": (290, 150, 47, 20),
+        "text": (300, 150),            # y here acts like top for wrapped text
         "max_width": 85,
         "font_size":10,
         "wrap": True,
@@ -41,7 +41,7 @@ FIELD_CONFIG = {
         "max_lines": 6,
     },
     "rep_name": {
-        "box": (425, 150, 100, 16),
+        "box": (400, 150, 127, 16),
         "text": (450, 160),
         "max_width": 195,
         "font_size": 10,
@@ -55,15 +55,15 @@ FIELD_CONFIG = {
         "wrap": False,
     },
     "date": {
-        "box": (50, 740, 70, 16),
+        "box": (40, 740, 100, 16),
         "text": (50, 740),
         "max_width": 105,
         "font_size": 10,
         "wrap": False,
     },
     "nyval_phrase": {
-        "box": (25, 125, 180, 14),   # area to clear above signature
-        "text": (25, 135),           # baseline y
+        "box": (25, 80, 180, 14),   # area to clear above signature
+        "text": (25, 90),           # baseline y
         "max_width": 175,
         "font_size": 10,
         "wrap": False,
@@ -74,14 +74,14 @@ FIELD_CONFIG = {
         "img": (100, 105, 160, 50),   # x, y, width, height for image
     },
     "rep_name_2": {
-        "box": (25, 180, 100, 16),
+        "box": (13, 170, 93, 16),
         "text": (25, 180),
         "max_width": 195,
         "font_size": 10,
         "wrap": False,
     },
     "job_title_2": {
-        "box": (120, 180, 50, 10),
+        "box": (110, 170, 93, 16),
         "text": (120, 180),
         "max_width": 205,
         "font_size": 10,
