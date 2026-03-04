@@ -63,7 +63,7 @@ FIELD_CONFIG = {
     },
     "nyval_phrase": {
         "box": (25, 80, 0, 0),   # area to clear above signature
-        "text": (25, 100),           # baseline y
+        "text": (15, 92),           # baseline y
         "max_width": 175,
         "font_size": 10,
         "wrap": False,
@@ -71,7 +71,7 @@ FIELD_CONFIG = {
     "nyval_signature": {
         # box used to clear any placeholder area behind signature if needed
         "box": (100, 105, 0, 0),   # signature area
-        "img": (100, 105, 160, 50),   # x, y, width, height for image
+        "img": (10, 105, 160, 40),   # x, y, width, height for image
     },
     "rep_name_2": {
         "box": (13, 170, 0, 0),
