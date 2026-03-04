@@ -16,7 +16,7 @@ if css_path.exists():
 st.title("NYVAL - Dépôt de Données Sécurisé")
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
-    st.image("assets/logonyval.png", width=450)
+    st.image("assets/logonyval.png", width=360)
 st.markdown(
     "Ce portail est destiné à la transmission des données de consommation pour la réalisation de votre Audit Flash. "
     "Les données sont cryptées et traitées sous 48h par notre moteur d’intelligence énergétique."
@@ -39,7 +39,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-generate_pdf = st.button("Generate NDA (PDF)")
+generate_pdf = st.button("Générer un NDA (PDF)")
 
 if generate_pdf:
     missing_nda = []
@@ -50,11 +50,11 @@ if generate_pdf:
     if not hq_address.strip(): missing_nda.append("Headquarters Address")
 
     if missing_nda:
-        st.error("Please fill NDA fields: " + ", ".join(missing_nda))
+        st.error("Veuillez remplir les champs relatifs à l'accord de confidentialité.: " + ", ".join(missing_nda))
     else:
         pdf_bytes = generate_nda_pdf(company_name, legal_form, rep_fullname, job_title, hq_address)
         st.download_button(
-            "Download NDA (PDF)",
+            "Télécharger le NDA (PDF)",
             data=pdf_bytes,
             file_name=f"NYVAL_NDA_{company_name.replace(' ', '_')}.pdf",
             mime="application/pdf"
@@ -124,7 +124,14 @@ protocol_url = None  # set to a real URL if client provides one
 if protocol_url:
     st.markdown(f"[Consulter le protocole de confidentialité NYVAL]({protocol_url})")
 else:
-    st.markdown("Consulter le protocole de confidentialité NYVAL (lien à confirmer)")
+    nda_url = "https://github.com/Ahmetyanikk/nyval-porta/blob/main/assets/NDA%20NYVALmod%C3%A8le%20type.pdf"
+
+    st.markdown(
+        f"<a href='{nda_url}' target='_blank' style='color: rgba(70,240,255,0.95); text-decoration: none; font-weight: 700;'>"
+        "Consulter le protocole de confidentialité NYVAL"
+        "</a>",
+        unsafe_allow_html=True
+    )
 
 st.markdown("</div>", unsafe_allow_html=True)
 

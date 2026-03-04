@@ -7,7 +7,13 @@ from utils.dates import today_str_fr
 TEMPLATE_PATH = Path("assets/NDA NYVALmodèle type.pdf")
 
 DEBUG_BOXES = False
-FONT_NAME = "Helvetica"
+OPEN_SANS_REGULAR = "assets/fonts/OpenSans-Regular.ttf"
+FONT_NAME = "OpenSans"
+
+def init_font(pdf: FPDF, size: float):
+    pdf.add_font(FONT_NAME, "", OPEN_SANS_REGULAR, uni=True)
+    pdf.set_font(FONT_NAME, size=size)
+    pdf.set_text_color(0, 0, 0)  # pure black
 
 FIELD_CONFIG = {
     "company_name": {
@@ -29,10 +35,10 @@ FIELD_CONFIG = {
         "box": (300, 156, 40, 20),
         "text": (300, 145),            # y here acts like top for wrapped text
         "max_width": 85,
-        "font_size":4,
+        "font_size":10,
         "wrap": True,
         "line_height": 11,
-        "max_lines": 2,
+        "max_lines": 6,
     },
     "rep_name": {
         "box": (425, 150, 100, 16),
@@ -56,22 +62,37 @@ FIELD_CONFIG = {
         "wrap": False,
     },
     "nyval_phrase": {
-        "box": (25, 120, 180, 14),   # area to clear above signature
-        "text": (25, 120),           # baseline y
+        "box": (25, 125, 180, 14),   # area to clear above signature
+        "text": (25, 135),           # baseline y
         "max_width": 175,
         "font_size": 10,
         "wrap": False,
     },
     "nyval_signature": {
         # box used to clear any placeholder area behind signature if needed
-        "box": (100, 90, 180, 60),   # signature area
-        "img": (100, 90, 160, 50),   # x, y, width, height for image
+        "box": (100, 105, 180, 60),   # signature area
+        "img": (100, 105, 160, 50),   # x, y, width, height for image
+    },
+    "rep_name_2": {
+        "box": (25, 180, 100, 16),
+        "text": (25, 180),
+        "max_width": 195,
+        "font_size": 10,
+        "wrap": False,
+    },
+    "job_title_2": {
+        "box": (120, 180, 50, 10),
+        "text": (120, 180),
+        "max_width": 205,
+        "font_size": 10,
+        "wrap": False,
     },
 }
 
 def draw_fit_text(pdf, x, y, text, max_width, font_name=FONT_NAME, font_size=10, min_size=7):
     size = font_size
     pdf.set_font(font_name, size=size)
+    pdf.set_text_color(0, 0, 0)
     while pdf.get_string_width(text) > max_width and size > min_size:
         size -= 0.5
         pdf.set_font(font_name, size=size)
@@ -103,14 +124,16 @@ def place_field(pdf, field_name, value):
     cover_placeholder(pdf, box_x, box_y, box_w, box_h, debug=DEBUG_BOXES)
 
     if cfg.get("wrap"):
-        draw_wrapped_text_two_lines(
+        draw_wrapped_text_n_lines(
             pdf,
             x=text_x,
-            y_top=text_y,  # text_y should represent TOP of the address area
+            y_top=text_y,  # should be TOP of the address box
             w=box_w,
             value=value,
-            font_size=cfg.get("font_size", 9.5),
+            font_size=cfg.get("font_size", 10),
             line_height=cfg.get("line_height", 11),
+            max_lines=cfg.get("max_lines", 3),
+            min_font_size=8.5,
         )
     else:
         draw_fit_text(
@@ -141,7 +164,7 @@ def generate_nda_pdf(company_name: str, legal_form: str, rep_name: str, job_titl
     overlay1 = FPDF(unit="pt", format=(w1, h1))
     overlay1.add_page()
     overlay1.set_auto_page_break(False)
-
+    init_font(overlay1, size=11.5)
     place_field(overlay1, "company_name", company_name)
     place_field(overlay1, "legal_form", legal_form)
     place_field(overlay1, "hq_address", hq_address)
@@ -165,11 +188,12 @@ def generate_nda_pdf(company_name: str, legal_form: str, rep_name: str, job_titl
         overlay2 = FPDF(unit="pt", format=(w2, h2))
         overlay2.add_page()
         overlay2.set_auto_page_break(False)
-
+        init_font(overlay2, size=11.5)
         # NYVAL fixed signature block (page 2 only)
         place_field(overlay2, "nyval_phrase", "lu et approuvé")
         place_signature(overlay2, "nyval_signature")
-
+        place_field(overlay2, "rep_name_2", rep_name)
+        place_field(overlay2, "job_title_2", job_title)
         overlay2_bytes = bytes(overlay2.output(dest="S"))
         overlay2_reader = PdfReader(BytesIO(overlay2_bytes))
         page2.merge_page(overlay2_reader.pages[0])
@@ -186,59 +210,78 @@ def generate_nda_pdf(company_name: str, legal_form: str, rep_name: str, job_titl
     writer.write(out)
     return out.getvalue()
 
-def wrap_two_lines(pdf: FPDF, text: str, max_width: float) -> tuple[str, str]:
+def wrap_lines(pdf: FPDF, text: str, max_width: float, max_lines: int) -> list[str]:
     words = (text or "").split()
     if not words:
-        return "", ""
+        return [""]
 
-    line1_words = []
+    lines: list[str] = []
     i = 0
-    while i < len(words):
-        candidate = (" ".join(line1_words + [words[i]])).strip()
-        if pdf.get_string_width(candidate) <= max_width:
-            line1_words.append(words[i])
+
+    while i < len(words) and len(lines) < max_lines:
+        line_words = []
+        while i < len(words):
+            cand = " ".join(line_words + [words[i]])
+            if pdf.get_string_width(cand) <= max_width:
+                line_words.append(words[i])
+                i += 1
+            else:
+                break
+        if not line_words:
+            # Single word longer than width: hard cut (rare)
+            lines.append(words[i])
             i += 1
         else:
+            lines.append(" ".join(line_words))
+
+    # If text still remains, truncate last line with ellipsis
+    if i < len(words) and lines:
+        last = lines[-1]
+        ell = " ..."
+        while pdf.get_string_width((last + ell).strip()) > max_width and last:
+            last = last[:-1]
+        lines[-1] = (last.strip() + ell).strip()
+
+    return lines
+
+
+def draw_wrapped_text_n_lines(
+    pdf: FPDF,
+    x: float,
+    y_top: float,
+    w: float,
+    value: str,
+    font_size: float,
+    line_height: float,
+    max_lines: int,
+    min_font_size: float = 8.0,
+):
+    """
+    Writes up to max_lines. If it doesn't fit, it will try to reduce font size a bit,
+    then truncate with ellipsis.
+    """
+    size = font_size
+    while True:
+        pdf.set_font(FONT_NAME, size=size)
+        pdf.set_text_color(0, 0, 0)
+
+        lines = wrap_lines(pdf, value, max_width=w, max_lines=max_lines)
+
+        # Always write within max_lines; wrap_lines already enforces it.
+        # If we had to truncate heavily, shrinking helps readability.
+        # We'll shrink until we reach min_font_size (optional).
+        if size <= min_font_size:
             break
 
-    line1 = " ".join(line1_words).strip()
-    rest = words[i:]
+        # If the last line ends with ellipsis, try a slightly smaller font to fit more
+        if lines and lines[-1].endswith("...") and size - 0.5 >= min_font_size:
+            size -= 0.5
+            continue
+        break
 
-    if not rest:
-        return line1, ""
-
-    line2_words = []
-    for w in rest:
-        candidate = (" ".join(line2_words + [w])).strip()
-        if pdf.get_string_width(candidate) <= max_width:
-            line2_words.append(w)
-        else:
-            break
-
-    line2 = " ".join(line2_words).strip()
-
-    # If still more words remain, truncate and add ellipsis
-    remaining = rest[len(line2_words):]
-    if remaining:
-        # try to add "..." within width
-        ell = "..."
-        while pdf.get_string_width((line2 + ell).strip()) > max_width and line2_words:
-            line2_words.pop()
-            line2 = " ".join(line2_words).strip()
-        line2 = (line2 + " ...").strip()
-
-    return line1, line2
-
-def draw_wrapped_text_two_lines(pdf: FPDF, x: float, y_top: float, w: float, value: str, font_size=9.5, line_height=11):
-    pdf.set_font(FONT_NAME, size=font_size)
-    pdf.set_text_color(0, 0, 0)
-
-    l1, l2 = wrap_two_lines(pdf, value, max_width=w)
-
-    # y_top is the top of the address box. We write baselines using line_height.
-    pdf.text(x, y_top + line_height, l1)
-    if l2:
-        pdf.text(x, y_top + 2 * line_height, l2)
+    # Write lines
+    for idx, line in enumerate(lines[:max_lines]):
+        pdf.text(x, y_top + (idx + 1) * line_height, line)
 
 
 from pathlib import Path

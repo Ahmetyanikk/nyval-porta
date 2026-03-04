@@ -171,3 +171,16 @@ img {
   border: none !important;
   box-shadow: none !important;
 }
+
+/* White-label Streamlit: hide default UI chrome */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+
+/* Hide "Fork" / GitHub icons in top-right (Streamlit Cloud) */
+[data-testid="stToolbar"] {visibility: hidden;}
+[data-testid="stDecoration"] {visibility: hidden;}
+[data-testid="stStatusWidget"] {visibility: hidden;}
+
+/* Reduce extra top padding created by Streamlit header */
+.block-container { padding-top: 18px !important; }
