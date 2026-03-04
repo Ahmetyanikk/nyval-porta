@@ -28,11 +28,11 @@ st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
 
 st.markdown("<div class='ny-card-title'>Informations NDA</div>", unsafe_allow_html=True)
 
-company_name = st.text_input("Company Name *", placeholder="Ex: STEF")
-legal_form = st.text_input("Legal Form *", placeholder="Ex: SAS, SARL, SA")
-rep_fullname = st.text_input("Representative Name & Last Name *", placeholder="Ex: Jean Dupont")
-job_title = st.text_input("Job Title *", placeholder="Ex: Directeur des Opérations")
-hq_address = st.text_input("Headquarters Address *", placeholder="Adresse complète")
+company_name = st.text_input("Nom de l'entreprise *", placeholder="Ex: STEF")
+legal_form = st.text_input("Forme juridique *", placeholder="Ex: SAS, SARL, SA")
+rep_fullname = st.text_input("Nom et prénom du représentant *", placeholder="Ex: Jean Dupont")
+job_title = st.text_input("Intitulé du poste *", placeholder="Ex: Directeur des Opérations")
+hq_address = st.text_input("Adresse du siège social *", placeholder="Adresse complète")
 
 st.markdown(
     "<div class='ny-help'>Les 5 champs ci-dessus sont requis pour générer un NDA valide.</div>",
@@ -47,7 +47,7 @@ if generate_pdf:
     if not legal_form.strip(): missing_nda.append("Legal Form")
     if not rep_fullname.strip(): missing_nda.append("Representative Name & Last Name")
     if not job_title.strip(): missing_nda.append("Job Title")
-    if not hq_address.strip(): missing_nda.append("Headquarters Address")
+    if not hq_address.strip(): missing_nda.append("Adresse du siège social")
 
     if missing_nda:
         st.error("Veuillez remplir les champs relatifs à l'accord de confidentialité.: " + ", ".join(missing_nda))
@@ -138,7 +138,7 @@ st.markdown("</div>", unsafe_allow_html=True)
 st.markdown("<div style='height:18px'></div>", unsafe_allow_html=True)
 
 # Submit button behavior (UI only for now)
-submit = st.button("Submit →")
+submit = st.button("Soumettre →")
 
 if submit:
     missing = []
