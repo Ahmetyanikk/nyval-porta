@@ -71,7 +71,7 @@ FIELD_CONFIG = {
     "nyval_signature": {
         # box used to clear any placeholder area behind signature if needed
         "box": (100, 105, 0, 0),   # signature area
-        "img": (10, 105, 160, 40),   # x, y, width, height for image
+        "img": (10, 100, 160, 40),   # x, y, width, height for image
     },
     "rep_name_2": {
         "box": (13, 170, 0, 0),
