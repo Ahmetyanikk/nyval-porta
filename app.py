@@ -50,7 +50,7 @@ if generate_pdf:
     if not hq_address.strip(): missing_nda.append("Adresse du siège social")
 
     if missing_nda:
-        st.error("Veuillez remplir les champs relatifs à l'accord de confidentialité.: " + ", ".join(missing_nda))
+        st.error("veuillez remplir tous les champs ci-dessus, relatifs à l'accord de confidentialité")
     else:
         pdf_bytes = generate_nda_pdf(company_name, legal_form, rep_fullname, job_title, hq_address)
         st.download_button(
