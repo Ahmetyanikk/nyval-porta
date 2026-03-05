@@ -142,15 +142,15 @@ submit = st.button("Soumettre →")
 
 if submit:
     missing = []
-    if not company_name.strip(): missing.append("Company Name")
-    if not legal_form.strip(): missing.append("Legal Form")
-    if not rep_fullname.strip(): missing.append("Representative Name & Last Name")
-    if not job_title.strip(): missing.append("Job Title")
-    if not hq_address.strip(): missing.append("Headquarters Address")
-    if enedis_file is None: missing.append("Export ENEDIS file")
-    if not invoice_files: missing.append("Invoice PDFs")
-    if wms_file is None: missing.append("WMS file")
-    if not accept: missing.append("Protocol acceptance")
+    if not company_name.strip(): missing.append("Nom de l'entreprise")
+    if not legal_form.strip(): missing.append("Forme juridique")
+    if not rep_fullname.strip(): missing.append("Nom et prénom du représentant")
+    if not job_title.strip(): missing.append("Intitulé du poste")
+    if not hq_address.strip(): missing.append("Adresse du siège social")
+    if enedis_file is None: missing.append("Exporter le fichier ENEDIS")
+    if not invoice_files: missing.append("Factures PDF")
+    if wms_file is None: missing.append("Fichier WMS")
+    if not accept: missing.append("Acceptation du protocole")
 
     # File validation (types + size limit)
     errors = []

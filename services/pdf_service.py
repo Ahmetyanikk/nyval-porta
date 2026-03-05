@@ -42,7 +42,7 @@ FIELD_CONFIG = {
     },
     "rep_name": {
         "box": (400, 150, 0, 0),
-        "text": (450, 179),
+        "text": (500, 179),
         "max_width": 195,
         "font_size": 10,
         "wrap": False,
@@ -297,7 +297,7 @@ def place_signature(pdf: FPDF, field_name: str):
 
     if not SIGNATURE_PATH.exists():
         # Keep it explicit so you notice immediately during testing
-        raise FileNotFoundError(f"Signature file missing: {SIGNATURE_PATH}")
+        raise FileNotFoundError(f"Fichier de signature manquant: {SIGNATURE_PATH}")
 
     img_x, img_y, img_w, img_h = cfg["img"]
     pdf.image(str(SIGNATURE_PATH), x=img_x, y=img_y, w=img_w, h=img_h)
