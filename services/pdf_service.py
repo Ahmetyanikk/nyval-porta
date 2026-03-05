@@ -33,12 +33,12 @@ FIELD_CONFIG = {
     "hq_address": {
         # taller box so it can wrap to 2 lines
         "box": (290, 150, 0, 0),
-        "text": (250, 167),            # y here acts like top for wrapped text
-        "max_width": 85,
+        "text": (250, 179),            # y here acts like top for wrapped text
+        "max_width": 205,
         "font_size":10,
-        "wrap": True,
+        "wrap": False,
         "line_height": 11,
-        "max_lines": 6,
+        "max_lines": 2,
     },
     "rep_name": {
         "box": (400, 150, 0, 0),
